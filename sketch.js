@@ -6,25 +6,64 @@ document.addEventListener('touchmove', function (n) {
 let state = -1;
 let doubleClick, ts = [];
 let points = [];
-let k = 5;
+let k = 50;
 let kMoyen = [];
 let kPoints = [];
 let dis = [];
 let colors = [];
+let pixelPos = [];
+let img;
+let count = 0;
+
+function preload() {
+  img = loadImage("assets/3.jpg"); // Load the image
+}
 
 function setup() {
-  frameRate(3);
   createCanvas(windowWidth, windowHeight);
 
+
+  img.loadPixels();
+  img.resize(width, height);
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      let index = (width * y + x) * 4;
+      let lumi = img.pixels[index] + img.pixels[index + 1] + img.pixels[index + 2] + img.pixels[index + 3];
+      if (lumi < 800) {
+        count++;
+      }
+    }
+  }
+  console.log(count);
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      let index = (width * y + x) * 4;
+      let lumi = img.pixels[index] + img.pixels[index + 1] + img.pixels[index + 2] + img.pixels[index + 3];
+      if (lumi < 800 && Math.random() > 1 - (constrain(width * height * 0.02, 7000, 20000) / count)) {
+        let ee = createVector(x, y);
+        pixelPos.indexOf(ee) === -1 ? pixelPos.push(ee) : '';
+      }
+    }
+  }
+  console.log(pixelPos);
+
+  // frameRate(24);
   noCursor();
   textSize(30);
 
-  for (let i = 0; i < 800; i++) {
+  for (let i = 0; i < 10000; i++) {
+
+    // let dump = createVector(random(noise(i / 10000) * width, noise(2 - i / 3000) * height));
     let dump = createVector(random(0, width), random(0, height));
     points.push(dump);
   }
 
+  points = pixelPos;
   kMoyen = [...points].slice(0, k);
+  // for (let i = 0; i < k; i++) {
+  //   kMoyen[k] = createVector(random(width / 2, width / 2.1), random(width / 2, width / 2.1));
+  // }
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
     colors[i] = [random(0, 255), random(0, 255), random(0, 255), 180];
@@ -85,9 +124,11 @@ function draw() {
   for (let i = 0; i < kPoints.length; i++) {
     fill(colors[i]);
     kPoints[i].forEach(a => {
-      ellipse(a.x, a.y, 10, 10)
+      ellipse(a.x, a.y, 2, 2)
     })
-    ellipse(kMoyen[i].x, kMoyen[i].y, kPoints[i].length / 3);
+    fill(colors[i][0], colors[i][1], colors[i][2], 100);
+
+    ellipse(kMoyen[i].x, kMoyen[i].y, kPoints[i].length / 3 / k * 15);
   }
 
 
