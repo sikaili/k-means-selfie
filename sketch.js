@@ -88,24 +88,16 @@ function draw() {
       ellipse(a.x, a.y, 10, 10)
     })
     ellipse(kMoyen[i].x, kMoyen[i].y, kPoints[i].length / 3);
-
-
   }
+
+
   for (let i = 0; i < kPoints.length; i++) {
     kPoints[i] = [];
   }
-  console.log(kPoints);
-
-
-
+  // console.log(kPoints);
   // console.log(kMoyen);
 
-
 }
-
-
-
-
 
 
 
