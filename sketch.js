@@ -11,9 +11,10 @@ let ks = [];
 let k0 = [];
 let k1 = [];
 let k2 = [];
-let k = 3;
+let k = 4;
 let kss = [];
 let dis = [];
+let colors = [];
 
 function setup() {
   frameRate(3);
@@ -35,6 +36,7 @@ function setup() {
   ks = [...points].slice(0, k);
   for (let i = 0; i < ks.length; i++) {
     kss[i] = [];
+    colors[i] = [random(0, 255), random(0, 255), random(0, 255), 180];
   }
 }
 
@@ -77,7 +79,9 @@ function draw() {
     // (dis1 < dis2) && (dis1 < dis0) ? k1.push(points[i]): "";
     // (dis2 < dis1) && (dis2 < dis0) ? k2.push(points[i]): "";
   }
-  ks.map((obj, n) => aver(kss[n]));
+  for (let i = 0; i < kss.length; i++) {
+    ks[i] = aver(kss[i]);
+  }
   // ks[0] = aver(k0);
   // ks[1] = aver(k1);
   // ks[2] = aver(k2);
@@ -98,8 +102,11 @@ function draw() {
     ellipse(a.x, a.y, 10, 10)
   })
   ellipse(ks[2].x, ks[2].y, k2.length / 3);
-  kss.map(obj => []);
 
+  for (let i = 0; i < kss.length; i++) {
+    kss[i] = [];
+  }
+  console.log(kss);
 
 
 
