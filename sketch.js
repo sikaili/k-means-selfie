@@ -124,7 +124,7 @@ function draw() {
   for (let i = 0; i < kPoints.length; i++) {
     fill(colors[i]);
     kPoints[i].forEach(a => {
-      ellipse(a.x, a.y, 2, 2)
+      ellipse(a.x + Math.random(), a.y - Math.random(), 2, 2)
     })
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
 
