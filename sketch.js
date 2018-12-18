@@ -13,6 +13,7 @@ let k1 = [];
 let k2 = [];
 let k = 3;
 let kss = [];
+let dis = [];
 
 function setup() {
   frameRate(3);
@@ -31,7 +32,7 @@ function setup() {
     let dump = createVector(random(0, width), random(0, height));
     points.push(dump);
   }
-  ks = [...points].slice(0, 3);
+  ks = [...points].slice(0, k);
   for (let i = 0; i < ks.length; i++) {
     kss[i] = [];
   }
@@ -60,38 +61,44 @@ function draw() {
   textAlign(CENTER);
   fill(255);
   text("K-Moyennes", width / 2, height * 0.8)
+
   for (let i = 0; i < points.length; i++) {
-    let dis0 = p5.Vector.dist(points[i], ks[0]);
-    let dis1 = p5.Vector.dist(points[i], ks[1]);
-    let dis2 = p5.Vector.dist(points[i], ks[2]);
-    (dis0 < dis1) && (dis0 < dis2) ? k0.push(points[i]): "";
-    (dis1 < dis2) && (dis1 < dis0) ? k1.push(points[i]): "";
-    (dis2 < dis1) && (dis2 < dis0) ? k2.push(points[i]): "";
+    for (let t = 0; t < kss.length; t++) {
+      dis[t] = p5.Vector.dist(points[i], ks[t]);
+    }
+    let t = Math.min(...dis);
+    let n = dis.indexOf(t);
+    // console.log(n);
+    kss[n].push(points[i]);
+    // let dis0 = p5.Vector.dist(points[i], ks[0]);
+    // let dis1 = p5.Vector.dist(points[i], ks[1]);
+    // let dis2 = p5.Vector.dist(points[i], ks[2]);
+    // (dis0 < dis1) && (dis0 < dis2) ? k0.push(points[i]): "";
+    // (dis1 < dis2) && (dis1 < dis0) ? k1.push(points[i]): "";
+    // (dis2 < dis1) && (dis2 < dis0) ? k2.push(points[i]): "";
   }
-  ks[0] = aver(k0);
-  ks[1] = aver(k1);
-  ks[2] = aver(k2);
-  k0.forEach(a => {
+  ks.map((obj, n) => aver(kss[n]));
+  // ks[0] = aver(k0);
+  // ks[1] = aver(k1);
+  // ks[2] = aver(k2);
+  kss[0].forEach(a => {
     fill(255, 0, 0, 180);
     ellipse(a.x, a.y, 10, 10)
   })
   ellipse(ks[0].x, ks[0].y, k0.length / 3);
 
-  k1.forEach(a => {
+  kss[1].forEach(a => {
     fill(0, 255, 0, 180);
     ellipse(a.x, a.y, 10, 10)
   })
   ellipse(ks[1].x, ks[1].y, k1.length / 3);
 
-  k2.forEach(a => {
+  kss[2].forEach(a => {
     fill(0, 0, 255, 180);
     ellipse(a.x, a.y, 10, 10)
   })
   ellipse(ks[2].x, ks[2].y, k2.length / 3);
-  k0 = [];
-  k1 = [];
-  k2 = [];
-
+  kss.map(obj => []);
 
 
 
