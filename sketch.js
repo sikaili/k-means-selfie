@@ -18,15 +18,15 @@ let colors = [];
 
 function setup() {
   frameRate(3);
-  mic = new p5.AudioIn();
-  mic.start();
+  // mic = new p5.AudioIn();
+  // mic.start();
   createCanvas(windowWidth, windowHeight);
-  osc = new p5.Oscillator();
-  osc.disconnect();
-  osc.connect(filt);
-  osc.setType('sawtooth');
-  osc.start();
-  osc.freq(0);
+  // osc = new p5.Oscillator();
+  // osc.disconnect();
+  // osc.connect(filt);
+  // osc.setType('sawtooth');
+  // osc.start();
+  // osc.freq(0);
   noCursor();
   textSize(30);
   for (let i = 0; i < 800; i++) {
