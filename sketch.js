@@ -11,7 +11,7 @@ let ks = [];
 let k0 = [];
 let k1 = [];
 let k2 = [];
-let k = 4;
+let k = 20;
 let kss = [];
 let dis = [];
 let colors = [];
@@ -85,24 +85,20 @@ function draw() {
   // ks[0] = aver(k0);
   // ks[1] = aver(k1);
   // ks[2] = aver(k2);
-  kss[0].forEach(a => {
-    fill(255, 0, 0, 180);
-    ellipse(a.x, a.y, 10, 10)
-  })
+  // kss[0].forEach(a => {
+  //   fill(255, 0, 0, 180);
+  //   ellipse(a.x, a.y, 10, 10)
+  // })
   ellipse(ks[0].x, ks[0].y, k0.length / 3);
+  for (let i = 0; i < kss.length; i++) {
+    fill(colors[i]);
+    kss[i].forEach(a => {
+      ellipse(a.x, a.y, 10, 10)
+    })
+    ellipse(ks[i].x, ks[i].y, kss[i].length / 3);
 
-  kss[1].forEach(a => {
-    fill(0, 255, 0, 180);
-    ellipse(a.x, a.y, 10, 10)
-  })
-  ellipse(ks[1].x, ks[1].y, k1.length / 3);
 
-  kss[2].forEach(a => {
-    fill(0, 0, 255, 180);
-    ellipse(a.x, a.y, 10, 10)
-  })
-  ellipse(ks[2].x, ks[2].y, k2.length / 3);
-
+  }
   for (let i = 0; i < kss.length; i++) {
     kss[i] = [];
   }
