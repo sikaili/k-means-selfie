@@ -6,43 +6,13 @@ function touchStarted() {
 }
 
 function touchEnded() {
-  // points = [];
-  // Video.loadPixels();
-
-  // loadPixels();
-  // for (let y = 0; y < Video.height; y++) {
-  //   for (let x = 0; x < Video.width; x++) {
-  //     var index = (Video.width - x + 1 + (y * Video.width)) * 4;
-  //     // console.log(index);
-  //     let r = Video.pixels[index + 0];
-  //     let g = Video.pixels[index + 1];
-  //     let b = Video.pixels[index + 2];
-  //     let bright = (r + g + b) / 3;
-  //     // console.log(r);
-  //     // console.log(g);
-  //     // console.log(bright);
-
-
-  //     let ee = createVector(x * vScale, y * vScale);
-  //     ee.r = r;
-  //     ee.g = g;
-  //     ee.b = b;
-  //     bright < 80 ? points.push(ee) : "";
-  //   }
-  // }
-  // kMoyen = [...points].slice(0, k + 1);
   for (let i = 0; i < k + 1; i++) {
     kMoyen[i] = createVector(random(0, width), random(0, height));
   }
-
-  // console.log(points);
-
-
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
     colors[i] = [random(0, 255), random(0, 255), random(0, 255), 180];
   }
-  // loop();
   state = 0;
   if (state == -2) {
     if (mouseX < width / 2) {

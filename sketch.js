@@ -97,7 +97,6 @@ function aver(arr) {
 function draw() {
   points = [];
   Video.loadPixels();
-
   loadPixels();
   let bris = [];
   for (let y = 0; y < Video.height; y++) {
@@ -112,20 +111,13 @@ function draw() {
   }
   bris.sort((a, b) => a > b);
   let median = bris[Math.floor(bris.length / 2.5)];
-  // console.log(bris);
   for (let y = 0; y < Video.height; y++) {
     for (let x = 0; x < Video.width; x++) {
       var index = (Video.width - x + 1 + (y * Video.width)) * 4;
-      // console.log(index);
       let r = Video.pixels[index + 0];
       let g = Video.pixels[index + 1];
       let b = Video.pixels[index + 2];
       let bright = (r + g + b) / 3;
-      // console.log(r);
-      // console.log(g);
-      // console.log(bright);
-
-
       let ee = createVector(x * vScale, y * vScale);
       ee.r = r;
       ee.g = g;
@@ -133,19 +125,16 @@ function draw() {
       bright < 80 ? points.push(ee) : "";
     }
   }
+  kMoyen[k + 1] = createVector(mouseX, mouseY);
+
 
   background(0);
   // text
   noStroke();
-  textAlign(CENTER);
-  fill(255);
-  text("K-Moyennes", width / 2, height * 0.8);
-  // if (state == 1) {
-  //   for (let i = 0; i < points.length; i++) {
-  //     fill(points[i].r, points[i].g, points[i].b);
-  //     ellipse(points[i].x, points[i].y, 10);
-  //   }
-  // }
+  // textAlign(CENTER);
+  // fill(255);
+  // text("K-Moyennes", width / 2, height * 0.8);
+
   for (let i = 0; i < points.length; i++) {
     for (let t = 0; t < kPoints.length; t++) {
       dis[t] = p5.Vector.dist(points[i], kMoyen[t]);
