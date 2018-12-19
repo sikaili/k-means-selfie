@@ -9,9 +9,10 @@ function touchEnded() {
   for (let i = 0; i < k + 1; i++) {
     kMoyen[i] = createVector(random(0, width), random(0, height));
   }
+  kMoyen = points.slice(0, k + 1);
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
-    colors[i] = [random(0, 255), random(0, 255), random(0, 255), 180];
+    colors[i] = [random(-255, 500), random(50, 255), random(-255, 555), 200];
   }
   state = 0;
   if (state == -2) {
@@ -26,24 +27,6 @@ function touchEnded() {
       }
     }
   }
-  var t = frameCount;
-  // addSnapshot(t);
-
-  if (touches.length !== 0) {
-    ts = [];
-  } else {
-    ts.push(t);
-  }
-  if (ts.length > 2) {
-    ts.splice(0, 1);
-  }
-  if (ts[1] - ts[0] < 12) {
-    doubleClick = true;
-
-  } else {
-    doubleClick = false;
-  }
-  if (doubleClick) {}
 
 }
 

@@ -77,7 +77,7 @@ function setup() {
   }
   for (let i = 0; i < kMoyen.length + 1; i++) {
     kPoints[i] = [];
-    colors[i] = [random(0, 255), random(0, 255), random(0, 255), 180];
+    colors[i] = [random(100, 255), random(50, 255), random(100, 255), 200];
   }
 }
 
