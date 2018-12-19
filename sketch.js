@@ -3,7 +3,6 @@ document.addEventListener('touchmove', function (n) {
 }, {
   passive: false
 });
-// document.getElementById("slider").addEventListener('onchange');
 
 let state = -1;
 let doubleClick, ts = [];
@@ -20,7 +19,7 @@ let [Video, vScale] = ["", 3];
 let kScale = 60;
 
 function preload() {
-  img = loadImage("assets/3.jpg"); // Load the image
+  img = loadImage("assets/3.jpg");
 }
 
 function setup() {
@@ -40,29 +39,28 @@ function setup() {
   img.resize(width, height);
   // img.loadPixels();
 
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      let index = (width * y + x) * 4;
-      let lumi = img.pixels[index] + img.pixels[index + 1] + img.pixels[index + 2] + img.pixels[index + 3];
-      if (lumi < 800) {
-        count++;
-      }
-    }
-  }
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      let index = (width * y + x) * 4;
-      let lumi = img.pixels[index] + img.pixels[index + 1] + img.pixels[index + 2] + img.pixels[index + 3];
-      if (lumi < 800 && Math.random() > 1 - (constrain(width * height * 0.02, 7000, 20000) / count)) {
-        let ee = createVector(x, y);
-        pixelPos.indexOf(ee) === -1 ? pixelPos.push(ee) : '';
-      }
-    }
-  }
+  // for (let y = 0; y < height; y++) {
+  //   for (let x = 0; x < width; x++) {
+  //     let index = (width * y + x) * 4;
+  //     let lumi = img.pixels[index] + img.pixels[index + 1] + img.pixels[index + 2] + img.pixels[index + 3];
+  //     if (lumi < 800) {
+  //       count++;
+  //     }
+  //   }
+  // }
+  // for (let y = 0; y < height; y++) {
+  //   for (let x = 0; x < width; x++) {
+  //     let index = (width * y + x) * 4;
+  //     let lumi = img.pixels[index] + img.pixels[index + 1] + img.pixels[index + 2] + img.pixels[index + 3];
+  //     if (lumi < 800 && Math.random() > 1 - (constrain(width * height * 0.02, 7000, 20000) / count)) {
+  //       let ee = createVector(x, y);
+  //       pixelPos.indexOf(ee) === -1 ? pixelPos.push(ee) : '';
+  //     }
+  //   }
+  // }
 
   // noCursor();
   textSize(30);
-
   for (let i = 0; i < 10000; i++) {
     let dump = createVector(random(0.3 * width, 0.7 * width), random(0.3 * height, 0.7 * height));
     points.push(dump);
@@ -161,15 +159,10 @@ function draw() {
     ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * kScale);
   }
 
-
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
   }
 }
-
-
-
-
 
 document.touchmove = function (n) {
   n.preventDefault();

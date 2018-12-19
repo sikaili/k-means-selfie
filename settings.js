@@ -1,15 +1,15 @@
 function touchStarted() {
-  // noLoop();
-
   state = 1;
-
 }
 
 function touchEnded() {
-  for (let i = 0; i < k + 1; i++) {
-    kMoyen[i] = createVector(random(0, width), random(0, height));
+  if (Math.random() > 0.5) {
+    for (let i = 0; i < k + 1; i++) {
+      kMoyen[i] = createVector(random(0, width), random(0, height));
+    }
+  } else {
+    kMoyen = points.slice(0, k + 1);
   }
-  // kMoyen = points.slice(0, k + 1);
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
     colors[i] = [random(100, 500), random(50, 255), random(100, 555), 200];
@@ -27,36 +27,23 @@ function touchEnded() {
       }
     }
   }
-
 }
 
 function keyPressed() {
+  if (keyCode == 189 || keyCode == 187) {
 
-  if (keyCode == 189 || keyCode == 187) {}
-
+  }
 }
-
 
 function addSnapshot(id) {
   var dumps = [];
-  // for(var mm =0; mm<draws.length; mm++){
-  //   var dump = draws[mm].mp.map( function( element )
-  //   {
-  //       return { x : element.x , y : element.y }
-  //   })
-  //   dumps.push(dump);
-  // }
-
   console.log(dumps);
-
   localStorage.setItem("canvas-" + id, JSON.stringify(dumps))
-
 }
 
 function removeSnapshot(id) {
   localStorage.removeItem("canvas-" + id);
 }
-
 
 function getSnapshot(id) {
   var canvas = JSON.parse(localStorage.getItem("canvas-" + id));
@@ -70,6 +57,5 @@ function resetAllSnapshots() {
 
 
 function windowResized() {
-
   setTimeout(location.reload(), 200);
 }
