@@ -64,7 +64,7 @@ function setup() {
   textSize(30);
 
   for (let i = 0; i < 10000; i++) {
-    let dump = createVector(random(0, width), random(0, height));
+    let dump = createVector(random(0.3 * width, 0.7 * width), random(0.3 * height, 0.7 * height));
     points.push(dump);
   }
 
