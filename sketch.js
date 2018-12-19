@@ -29,9 +29,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   if (height > width) {
     vScale = 10;
-    kScale = 100;
+    kScale = 150;
   }
-  // pixelDensity(1);
   Video = createCapture(Video);
   Video.loop();
   Video.hide();
