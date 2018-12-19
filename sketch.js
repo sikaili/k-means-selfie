@@ -28,7 +28,7 @@ function setup() {
 
   createCanvas(windowWidth, windowHeight);
   if (height > width) {
-    vScale = 7;
+    vScale = 9;
     kScale = 150;
   }
   Video = createCapture(Video);
@@ -154,7 +154,7 @@ function draw() {
   for (let i = 0; i < kPoints.length; i++) {
     fill(colors[i]);
     kPoints[i].forEach(a => {
-      ellipse(a.x + Math.random(), a.y - Math.random(), 2, 2)
+      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 : 2, height > width ? 4 : 2);
     })
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
     i === kMoyen.length - 1 ? fill(200, 0, 180, 200) : "";
