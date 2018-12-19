@@ -17,6 +17,7 @@ let pixelPos = [];
 let img;
 let count = 0;
 let [Video, vScale] = ["", 3];
+let kScale = 60;
 
 function preload() {
   img = loadImage("assets/3.jpg"); // Load the image
@@ -24,11 +25,11 @@ function preload() {
 
 function setup() {
   pixelDensity(1.0);
-  // createCanvas(windowWidth, windowWidth * 0.7 > windowHeight ? windowHeight : windowWidth * 0.7);
 
   createCanvas(windowWidth, windowHeight);
   if (height > width) {
     vScale = 10;
+    kScale = 100;
   }
   // pixelDensity(1);
   Video = createCapture(Video);
@@ -158,7 +159,7 @@ function draw() {
     })
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
     i === kMoyen.length - 1 ? fill(200, 0, 180, 200) : "";
-    ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * 60);
+    ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * kScale);
   }
 
 
