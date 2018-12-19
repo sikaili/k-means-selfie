@@ -68,7 +68,7 @@ function setup() {
     points.push(dump);
   }
 
-  points = pixelPos;
+  // points = pixelPos;
   // points = [];
   kMoyen = [...points].slice(0, k + 1);
 
@@ -126,7 +126,7 @@ function draw() {
       ee.r = r;
       ee.g = g;
       ee.b = b;
-      bright < 80 ? points.push(ee) : "";
+      bright < 90 ? points.push(ee) : "";
     }
   }
   kMoyen[k + 1] = createVector(mouseX, mouseY);
