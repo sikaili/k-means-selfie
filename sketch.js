@@ -23,9 +23,9 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowWidth * 0.7 > windowHeight ? windowHeight : windowWidth * 0.7);
+  // createCanvas(windowWidth, windowWidth * 0.7 > windowHeight ? windowHeight : windowWidth * 0.7);
 
-
+  createCanvas(windowWidth, windowHeight);
   // pixelDensity(1);
   Video = createCapture(Video);
   Video.loop();
