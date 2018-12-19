@@ -9,7 +9,7 @@ function touchEnded() {
   for (let i = 0; i < k + 1; i++) {
     kMoyen[i] = createVector(random(0, width), random(0, height));
   }
-  kMoyen = points.slice(0, k + 1);
+  // kMoyen = points.slice(0, k + 1);
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
     colors[i] = [random(-255, 500), random(50, 255), random(-255, 555), 200];
