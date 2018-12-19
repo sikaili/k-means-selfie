@@ -100,5 +100,6 @@ function resetAllSnapshots() {
 
 
 function windowResized() {
+
   setTimeout(location.reload(), 200);
 }

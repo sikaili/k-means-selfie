@@ -3,6 +3,8 @@ document.addEventListener('touchmove', function (n) {
 }, {
   passive: false
 });
+// document.getElementById("slider").addEventListener('onchange');
+
 let state = -1;
 let doubleClick, ts = [];
 let points = [];
@@ -49,7 +51,7 @@ function setup() {
     }
   }
 
-  noCursor();
+  // noCursor();
   textSize(30);
 
   for (let i = 0; i < 10000; i++) {
@@ -61,16 +63,19 @@ function setup() {
   // points = [];
   kMoyen = [...points].slice(0, k);
 
-  for (let i = 0; i < k; i++) {
+  for (let i = 0; i < k + 1; i++) {
     kMoyen[k] = createVector(random(width / 2, width / 2.1), random(width / 2, width / 2.1));
   }
-  for (let i = 0; i < kMoyen.length; i++) {
+  for (let i = 0; i < kMoyen.length + 1; i++) {
     kPoints[i] = [];
     colors[i] = [random(0, 255), random(0, 255), random(0, 255), 180];
   }
 }
 
 function aver(arr) {
+  if (arr.length === 0) {
+    return createVector(0, 0);
+  }
   let [xs, ys] = [
     [],
     []
@@ -85,6 +90,7 @@ function aver(arr) {
 }
 
 function draw() {
+  kMoyen[k + 1] = createVector(mouseX, mouseY);
   background(0);
   // text
   noStroke();
@@ -109,6 +115,7 @@ function draw() {
       ellipse(a.x + Math.random(), a.y - Math.random(), 2, 2)
     })
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
+    i === kMoyen.length - 1 ? fill(200, 0, 180, 200) : "";
     ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * 60);
   }
 
