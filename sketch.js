@@ -22,7 +22,6 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-
   img.loadPixels();
   img.resize(width, height);
 
@@ -87,6 +86,7 @@ function aver(arr) {
 }
 
 function draw() {
+  // pixelDensity(1.0)
   background(0);
   noStroke();
   textAlign(CENTER);
