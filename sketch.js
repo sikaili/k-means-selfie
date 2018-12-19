@@ -28,7 +28,7 @@ function setup() {
 
   createCanvas(windowWidth, windowHeight);
   if (height > width) {
-    vScale = 10;
+    vScale = 7;
     kScale = 150;
   }
   Video = createCapture(Video);
