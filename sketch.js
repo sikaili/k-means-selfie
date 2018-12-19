@@ -16,21 +16,26 @@ let colors = [];
 let pixelPos = [];
 let img;
 let count = 0;
-let [video, vScale] = ["", 16];
+let [Video, vScale] = ["", 3];
 
 function preload() {
   img = loadImage("assets/3.jpg"); // Load the image
 }
 
 function setup() {
-  // pixelDensity(1);
-  // video = createCapture(VIDEO);
-
   createCanvas(windowWidth, windowWidth * 0.7 > windowHeight ? windowHeight : windowWidth * 0.7);
-  // video.size(width / vScale, height / vScale);
+
+
+  // pixelDensity(1);
+  Video = createCapture(Video);
+  Video.loop();
+  Video.hide();
+  Video.size(width / vScale, height / vScale);
+
   // count=0, pixelPos=[];
-  img.loadPixels();
   img.resize(width, height);
+  // img.loadPixels();
+
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       let index = (width * y + x) * 4;
@@ -61,7 +66,7 @@ function setup() {
 
   points = pixelPos;
   // points = [];
-  kMoyen = [...points].slice(0, k);
+  kMoyen = [...points].slice(0, k + 1);
 
   for (let i = 0; i < k + 1; i++) {
     kMoyen[k] = createVector(random(width / 2, width / 2.1), random(width / 2, width / 2.1));
@@ -90,13 +95,57 @@ function aver(arr) {
 }
 
 function draw() {
-  kMoyen[k + 1] = createVector(mouseX, mouseY);
+  points = [];
+  Video.loadPixels();
+
+  loadPixels();
+  let bris = [];
+  for (let y = 0; y < Video.height; y++) {
+    for (let x = 0; x < Video.width; x++) {
+      let index = (Video.width - x + 1 + (y * Video.width)) * 4;
+      let r = Video.pixels[index + 0];
+      let g = Video.pixels[index + 1];
+      let b = Video.pixels[index + 2];
+      let bright = (r + g + b) / 3;
+      bris.push(bright);
+    }
+  }
+  bris.sort((a, b) => a > b);
+  let median = bris[Math.floor(bris.length / 2.5)];
+  // console.log(bris);
+  for (let y = 0; y < Video.height; y++) {
+    for (let x = 0; x < Video.width; x++) {
+      var index = (Video.width - x + 1 + (y * Video.width)) * 4;
+      // console.log(index);
+      let r = Video.pixels[index + 0];
+      let g = Video.pixels[index + 1];
+      let b = Video.pixels[index + 2];
+      let bright = (r + g + b) / 3;
+      // console.log(r);
+      // console.log(g);
+      // console.log(bright);
+
+
+      let ee = createVector(x * vScale, y * vScale);
+      ee.r = r;
+      ee.g = g;
+      ee.b = b;
+      bright < 80 ? points.push(ee) : "";
+    }
+  }
+
   background(0);
   // text
   noStroke();
   textAlign(CENTER);
   fill(255);
-  text("K-Moyennes", width / 2, height * 0.8)
+  text("K-Moyennes", width / 2, height * 0.8);
+  // if (state == 1) {
+  //   for (let i = 0; i < points.length; i++) {
+  //     fill(points[i].r, points[i].g, points[i].b);
+  //     ellipse(points[i].x, points[i].y, 10);
+  //   }
+  // }
   for (let i = 0; i < points.length; i++) {
     for (let t = 0; t < kPoints.length; t++) {
       dis[t] = p5.Vector.dist(points[i], kMoyen[t]);
