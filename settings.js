@@ -12,7 +12,7 @@ function touchEnded() {
   // kMoyen = points.slice(0, k + 1);
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
-    colors[i] = [random(-255, 500), random(50, 255), random(-255, 555), 200];
+    colors[i] = [random(100, 500), random(50, 255), random(100, 555), 200];
   }
   state = 0;
   if (state == -2) {
