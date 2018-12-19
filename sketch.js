@@ -23,6 +23,7 @@ function preload() {
 }
 
 function setup() {
+  pixelDensity(1.0);
   // createCanvas(windowWidth, windowWidth * 0.7 > windowHeight ? windowHeight : windowWidth * 0.7);
 
   createCanvas(windowWidth, windowHeight);
