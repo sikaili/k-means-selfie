@@ -3,6 +3,7 @@ function touchStarted() {
 }
 
 function touchEnded() {
+  state = 0;
   if (Math.random() > 0.5) {
     for (let i = 0; i < k + 1; i++) {
       kMoyen[i] = createVector(random(0, width), random(0, height));
@@ -13,19 +14,6 @@ function touchEnded() {
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
     colors[i] = [random(100, 500), random(50, 255), random(100, 555), 200];
-  }
-  state = 0;
-  if (state == -2) {
-    if (mouseX < width / 2) {
-      state = 0;
-      rrr = Math.floor(Math.random() * 100);
-    } else {
-      state = -1;
-      for (var e = 0; e < mm[drawsN].length; e++) {
-        var dra = new Draw(e, mm[drawsN][e]);
-        draws[e] = dra;
-      }
-    }
   }
 }
 
