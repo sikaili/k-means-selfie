@@ -4,13 +4,25 @@ function touchStarted() {
 
 function touchEnded() {
   state = 0;
-  if (Math.random() > 0.5) {
-    for (let i = 0; i < k + 1; i++) {
-      kMoyen[i] = createVector(random(0, width), random(0, height));
-    }
-  } else {
-    kMoyen = points.slice(0, k + 1);
+  // starting points cases
+  let n = Math.floor(Math.random() * 3) + 1;
+  switch (n) {
+    case 1:
+      {
+        for (let i = 0; i < k + 1; i++) {
+          kMoyen[i] = points[Math.floor(Math.random() * points.length)];
+        }
+      }
+    case 2:
+      {
+        kMoyen = points.slice(0, k + 1);
+      }
+    case 3:
+      {
+        kMoyen = points.slice(Math.floor(points.length / 2), Math.floor(points.length) + k + 1);
+      }
   }
+  // rest points for each center and set Color
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
     colors[i] = [random(100, 500), random(50, 255), random(100, 555), 200];
