@@ -75,7 +75,7 @@ function setup() {
   }
   for (let i = 0; i < kMoyen.length + 1; i++) {
     kPoints[i] = [];
-    colors[i] = [random(100, 255), random(50, 255), random(100, 255), 200];
+    colors[i] = [random(100, 255), random(50, 255), random(100, 500), 200];
   }
 }
 
@@ -153,8 +153,11 @@ function draw() {
   // display
   for (let i = 0; i < kPoints.length; i++) {
     fill(colors[i]);
+    stroke(colors[i]);
     kPoints[i].forEach(a => {
-      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 : 2);
+      // ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 : 2);
+      line(a.x + Math.random(), a.y - Math.random(), a.x + 4, a.y - 4);
+
     })
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
     i === kMoyen.length - 1 ? fill(200, 0, 180, 200) : "";
