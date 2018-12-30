@@ -24,7 +24,6 @@ function preload() {
 
 function setup() {
   pixelDensity(1.0);
-
   createCanvas(windowWidth, windowHeight);
   if (height > width) {
     vScale = 9;
@@ -102,21 +101,21 @@ function draw() {
   loadPixels();
   let bris = [];
   // median
-  for (let y = 0; y < Video.height; y++) {
-    for (let x = 0; x < Video.width; x++) {
-      let index = (Video.width - x + 1 + (y * Video.width)) * 4;
-      let r = Video.pixels[index + 0];
-      let g = Video.pixels[index + 1];
-      let b = Video.pixels[index + 2];
-      let bright = (r + g + b) / 3;
-      bris.push(bright);
-    }
-  }
-  bris.sort((a, b) => a > b);
-  let median = bris[Math.floor(bris.length / 2.5)];
+  // for (let y = 0; y < Video.height; y++) {
+  //   for (let x = 0; x < Video.width; x++) {
+  //     let index = (Video.width - x + 1 + (y * Video.width)) * 4;
+  //     let r = Video.pixels[index + 0];
+  //     let g = Video.pixels[index + 1];
+  //     let b = Video.pixels[index + 2];
+  //     let bright = (r + g + b) / 3;
+  //     bris.push(bright);
+  //   }
+  // }
+  // bris.sort((a, b) => a > b);
+  // let median = bris[Math.floor(bris.length / 2.5)];
   // video pixels calcultation
-  for (let y = 0; y < Video.height; y++) {
-    for (let x = 0; x < Video.width; x++) {
+  for (let y = 0; y < Video.height; y += 2) {
+    for (let x = 0; x < Video.width; x += 2) {
       var index = (Video.width - x + 1 + (y * Video.width)) * 4;
       let r = Video.pixels[index + 0];
       let g = Video.pixels[index + 1];
@@ -155,9 +154,10 @@ function draw() {
     fill(colors[i]);
     stroke(colors[i]);
     kPoints[i].forEach(a => {
-      // ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 : 2);
-      line(a.x + Math.random(), a.y - Math.random(), a.x + 4, a.y - 4);
-
+      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 : 2);
+      // line(a.x + Math.random(), a.y - Math.random(), a.x + 4, a.y - 4);
+      // line(a.x + Math.random(), a.y - Math.random(), a.x + 2, a.y + 2);
+      // vertex(a.x, a.y);
     })
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
     i === kMoyen.length - 1 ? fill(200, 0, 180, 200) : "";
