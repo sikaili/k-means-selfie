@@ -114,8 +114,9 @@ function draw() {
   // bris.sort((a, b) => a > b);
   // let median = bris[Math.floor(bris.length / 2.5)];
   // video pixels calcultation
-  for (let y = 0; y < Video.height; y += 2) {
-    for (let x = 0; x < Video.width; x += 2) {
+  let intP = constrain(Math.floor(mouseX / 100), 2, 10);
+  for (let y = 0; y < Video.height; y += intP) {
+    for (let x = 0; x < Video.width; x += intP) {
       var index = (Video.width - x + 1 + (y * Video.width)) * 4;
       let r = Video.pixels[index + 0];
       let g = Video.pixels[index + 1];
@@ -154,7 +155,7 @@ function draw() {
     fill(colors[i]);
     stroke(colors[i]);
     kPoints[i].forEach(a => {
-      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 : 2);
+      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 + Math.random() * 5 : intP + Math.random() * intP);
       // line(a.x + Math.random(), a.y - Math.random(), a.x + 4, a.y - 4);
       // line(a.x + Math.random(), a.y - Math.random(), a.x + 2, a.y + 2);
       // vertex(a.x, a.y);
