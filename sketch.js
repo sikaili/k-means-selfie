@@ -59,7 +59,7 @@ function setup() {
   // }
 
   // noCursor();
-  textSize(30);
+  textSize(20);
   for (let i = 0; i < 10000; i++) {
     let dump = createVector(random(0.3 * width, 0.7 * width), random(0.3 * height, 0.7 * height));
     points.push(dump);
@@ -137,7 +137,7 @@ function draw() {
   noStroke();
   textAlign(CENTER);
   fill(255);
-  text("K Means", width / 2, height * 0.8);
+  // text("K Means", width / 2, height * 0.8);
   // k means : calculate center for each pixel and refresh centers afterwards
   for (let i = 0; i < points.length; i++) {
     for (let t = 0; t < kPoints.length; t++) {
