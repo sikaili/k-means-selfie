@@ -16,8 +16,8 @@ function touchEnded() {
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
     colors[i] = [random(100, 500), random(50, 255), random(100, 555), 200];
-    let t = random(0, 255);
-    colors[i] = [t, t, t, 200];
+    let t = random(30, 255);
+    Math.random() > 0.3 ? colors[i] = [t, t, t, 200] : "  ";
   }
 }
 

@@ -69,9 +69,9 @@ function setup() {
   // points = [];
   kMoyen = [...points].slice(0, k + 1);
 
-  for (let i = 0; i < k + 1; i++) {
-    kMoyen[k] = createVector(random(width / 2, width / 2.1), random(width / 2, width / 2.1));
-  }
+  // for (let i = 0; i < k + 1; i++) {
+  //   kMoyen[k] = createVector(random(width / 2, width / 2.1), random(width / 2, width / 2.1));
+  // }
   for (let i = 0; i < kMoyen.length + 1; i++) {
     kPoints[i] = [];
     colors[i] = [random(100, 255), random(50, 255), random(100, 500), 200];
@@ -114,7 +114,7 @@ function draw() {
   // bris.sort((a, b) => a > b);
   // let median = bris[Math.floor(bris.length / 2.5)];
   // video pixels calcultation
-  let intP = constrain(Math.floor(mouseX / 100), 2, 10);
+  let intP = Math.floor(map(mouseX, 0, width, 2, 20));
   for (let y = 0; y < Video.height; y += intP) {
     for (let x = 0; x < Video.width; x += intP) {
       var index = (Video.width - x + 1 + (y * Video.width)) * 4;
@@ -155,14 +155,14 @@ function draw() {
     fill(colors[i]);
     stroke(colors[i]);
     kPoints[i].forEach(a => {
-      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 + Math.random() * 5 : intP + Math.random() * intP);
+      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? intP * 3 + Math.random() * intP * 3.5 : intP + Math.random() * intP);
       // line(a.x + Math.random(), a.y - Math.random(), a.x + 4, a.y - 4);
       // line(a.x + Math.random(), a.y - Math.random(), a.x + 2, a.y + 2);
       // vertex(a.x, a.y);
     })
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
     i === kMoyen.length - 1 ? fill(200, 0, 180, 200) : "";
-    ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * kScale);
+    ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * kScale * intP / 5);
   }
   // reset pixels in each center every time
   for (let i = 0; i < kMoyen.length; i++) {
