@@ -114,7 +114,7 @@ function draw() {
   // bris.sort((a, b) => a > b);
   // let median = bris[Math.floor(bris.length / 2.5)];
   // video pixels calcultation
-  let intP = Math.floor(map(mouseX, 0, width, 2, 20));
+  let intP = Math.floor(map(mouseX, 0, width, 1, 10));
   for (let y = 0; y < Video.height; y += intP) {
     for (let x = 0; x < Video.width; x += intP) {
       var index = (Video.width - x + 1 + (y * Video.width)) * 4;
