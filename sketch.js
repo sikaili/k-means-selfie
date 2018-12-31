@@ -24,7 +24,6 @@ function preload() {
 
 function setup() {
   pixelDensity(1.0);
-
   createCanvas(windowWidth, windowHeight);
   if (height > width) {
     vScale = 9;
@@ -70,12 +69,12 @@ function setup() {
   // points = [];
   kMoyen = [...points].slice(0, k + 1);
 
-  for (let i = 0; i < k + 1; i++) {
-    kMoyen[k] = createVector(random(width / 2, width / 2.1), random(width / 2, width / 2.1));
-  }
+  // for (let i = 0; i < k + 1; i++) {
+  //   kMoyen[k] = createVector(random(width / 2, width / 2.1), random(width / 2, width / 2.1));
+  // }
   for (let i = 0; i < kMoyen.length + 1; i++) {
     kPoints[i] = [];
-    colors[i] = [random(100, 255), random(50, 255), random(100, 255), 200];
+    colors[i] = [random(100, 255), random(50, 255), random(100, 500), 200];
   }
 }
 
@@ -101,20 +100,23 @@ function draw() {
   Video.loadPixels();
   loadPixels();
   let bris = [];
-  for (let y = 0; y < Video.height; y++) {
-    for (let x = 0; x < Video.width; x++) {
-      let index = (Video.width - x + 1 + (y * Video.width)) * 4;
-      let r = Video.pixels[index + 0];
-      let g = Video.pixels[index + 1];
-      let b = Video.pixels[index + 2];
-      let bright = (r + g + b) / 3;
-      bris.push(bright);
-    }
-  }
-  bris.sort((a, b) => a > b);
-  let median = bris[Math.floor(bris.length / 2.5)];
-  for (let y = 0; y < Video.height; y++) {
-    for (let x = 0; x < Video.width; x++) {
+  // median
+  // for (let y = 0; y < Video.height; y++) {
+  //   for (let x = 0; x < Video.width; x++) {
+  //     let index = (Video.width - x + 1 + (y * Video.width)) * 4;
+  //     let r = Video.pixels[index + 0];
+  //     let g = Video.pixels[index + 1];
+  //     let b = Video.pixels[index + 2];
+  //     let bright = (r + g + b) / 3;
+  //     bris.push(bright);
+  //   }
+  // }
+  // bris.sort((a, b) => a > b);
+  // let median = bris[Math.floor(bris.length / 2.5)];
+  // video pixels calcultation
+  let intP = Math.floor(map(mouseX, 0, width, 2, 20));
+  for (let y = 0; y < Video.height; y += intP) {
+    for (let x = 0; x < Video.width; x += intP) {
       var index = (Video.width - x + 1 + (y * Video.width)) * 4;
       let r = Video.pixels[index + 0];
       let g = Video.pixels[index + 1];
@@ -127,16 +129,16 @@ function draw() {
       bright < 90 ? points.push(ee) : "";
     }
   }
+  // mouse as the k+1 center
   kMoyen[k + 1] = createVector(mouseX, mouseY);
-
 
   background(0);
   // text
   noStroke();
-  // textAlign(CENTER);
-  // fill(255);
-  // text("K-Moyennes", width / 2, height * 0.8);
-
+  textAlign(CENTER);
+  fill(255);
+  text("K Means", width / 2, height * 0.8);
+  // k means : calculate center for each pixel and refresh centers afterwards
   for (let i = 0; i < points.length; i++) {
     for (let t = 0; t < kPoints.length; t++) {
       dis[t] = p5.Vector.dist(points[i], kMoyen[t]);
@@ -151,14 +153,18 @@ function draw() {
   // display
   for (let i = 0; i < kPoints.length; i++) {
     fill(colors[i]);
+    stroke(colors[i]);
     kPoints[i].forEach(a => {
-      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 : 2, height > width ? 4 : 2);
+      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? intP * 3 + Math.random() * intP * 3.5 : intP + Math.random() * intP);
+      // line(a.x + Math.random(), a.y - Math.random(), a.x + 4, a.y - 4);
+      // line(a.x + Math.random(), a.y - Math.random(), a.x + 2, a.y + 2);
+      // vertex(a.x, a.y);
     })
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
     i === kMoyen.length - 1 ? fill(200, 0, 180, 200) : "";
-    ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * kScale);
+    ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * kScale * intP / 5);
   }
-
+  // reset pixels in each center every time
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
   }

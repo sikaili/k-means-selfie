@@ -1,4 +1,6 @@
-/*! p5.dom.js v0.2.13 Oct 1, 2016 */
+// Changed until: https://github.com/processing/p5.js/pull/1397
+
+/*! p5.dom.js v0.2.10 April 25, 2016 */
 /**
  * <p>The web is much more than just canvas and p5.dom makes it easy to interact
  * with other HTML5 objects, including text, hyperlink, image, input, video,
@@ -375,7 +377,6 @@
    * @param  {Number} min minimum value of the slider
    * @param  {Number} max maximum value of the slider
    * @param  {Number} [value] default value of the slider
-   * @param  {Number} [step] step size for each tick of the slider (if step is set to 0, the slider will move continuously from the minimum to the maximum value)
    * @return {Object/p5.Element} pointer to p5.Element holding created node
    * @example
    * <div><code>
@@ -391,32 +392,13 @@
    *   background(val);
    * }
    * </code></div>
-   *
-   * <div><code>
-   * var slider;
-   * function setup() {
-   *   colorMode(HSB);
-   *   slider = createSlider(0, 360, 60, 40);
-   *   slider.position(10, 10);
-   *   slider.style('width', '80px');
-   * }
-   *
-   * function draw() {
-   *   var val = slider.value();
-   *   background(val, 100, 100, 1);
-   * }
-   * </code></div>
    */
   p5.prototype.createSlider = function(min, max, value, step) {
     var elt = document.createElement('input');
     elt.type = 'range';
     elt.min = min;
     elt.max = max;
-    if (step === 0) {
-      elt.step = .000000000000000001; // smallest valid step
-    } else if (step) {
-      elt.step = step;
-    }
+    if (step) elt.step = step;
     if (typeof(value) === "number") elt.value = value;
     return addElement(elt, this);
   };
@@ -640,11 +622,12 @@
     var radios = document.querySelectorAll("input[type=radio]");
     var count = 0;
     if(radios.length > 1){
+      console.log(radios,radios[0].name);
       var length = radios.length;
       var prev=radios[0].name;
       var current = radios[1].name;
-      count = 1;
-      for(var i = 1; i < length; i++) {
+      count=1;
+      for(var i = 1; i < length; i++ ){
         current = radios[i].name;
         if(prev != current){
           count++;
@@ -681,7 +664,7 @@
     };
     self.selected = function(){
       var length = this.elt.childNodes.length;
-      if(arguments.length == 1) {
+      if(arguments[0]) {
         for (var i = 0; i < length; i+=2){
           if(this.elt.childNodes[i].value == arguments[0])
             this.elt.childNodes[i].checked = true;
@@ -696,7 +679,7 @@
     };
     self.value = function(){
       var length = this.elt.childNodes.length;
-      if(arguments.length == 1) {
+      if(arguments[0]) {
         for (var i = 0; i < length; i+=2){
           if(this.elt.childNodes[i].value == arguments[0])
             this.elt.childNodes[i].checked = true;
@@ -999,8 +982,8 @@
     // set width and height onload metadata
     elt.addEventListener('loadedmetadata', function() {
       elt.play();
-      c.width = c.elt.width = elt.videoWidth;
-      c.height = c.elt.height = elt.videoHeight;
+      c.width = elt.videoWidth = elt.width;
+      c.height = elt.videoHeight = elt.height;
       c.loadedmetadata = true;
     });
     return c;
@@ -1391,43 +1374,6 @@
 
 
   /**
-   *
-   * Removes an attribute on the specified element.
-   *
-   * @method removeAttribute
-   * @param  {String} attr       attribute to remove
-   * @return {Object/p5.Element}
-   *
-   * @example
-   * <div><code>
-   * var button;
-   * var checkbox;
-   *
-   * function setup() {
-   *   checkbox = createCheckbox('enable', true);
-   *   checkbox.changed(enableButton);
-   *   button = createButton('button');
-   *   button.position(10, 10);
-   * }
-   *
-   * function enableButton() {
-   *   if( this.checked() ) {
-   *     // Re-enable the button
-   *     button.removeAttribute('disabled');
-   *   } else {
-   *     // Disable the button
-   *     button.attribute('disabled','');
-   *   }
-   * }
-   * </code></div>
-   */
-  p5.Element.prototype.removeAttribute = function(attr) {
-    this.elt.removeAttribute(attr);
-    return this;
-  };
-
-
-  /**
    * Either returns the value of the element if no arguments
    * given, or sets the value of the element.
    *
@@ -1479,7 +1425,7 @@
    * @example
    * <div class='norender'><code>
    * var div = createDiv('div');
-   * div.style("display", "none");
+   * div.attribute("display", "none");
    * div.show(); // turns display to block
    * </code></div>
    */
@@ -1832,13 +1778,6 @@
     if (this.loadedmetadata) { // wait for metadata
       p5.Renderer2D.prototype.set.call(this, x, y, imgOrCol);
     }
-  };
-  p5.MediaElement.prototype.copy = function(){
-    p5.Renderer2D.prototype.copy.apply(this, arguments);
-  };
-  p5.MediaElement.prototype.mask = function(){
-    this.loadPixels();
-    p5.Image.prototype.mask.apply(this, arguments);
   };
   /**
    *  Schedule an event to be called when the audio or video
