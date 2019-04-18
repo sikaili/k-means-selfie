@@ -113,48 +113,19 @@ function aver(arr) {
   //  calculate the average
   let x = xs.reduce((a, b) => a + b) / xs.length;
   let y = ys.reduce((a, b) => a + b) / ys.length;
+  // create a k point vector
   return createVector(x, y);
 }
 
 function draw() {
-  points = [];
-  // Video.loadPixels();
-  // loadPixels();
-  let bris = [];
-  // for (let y = 0; y < Video.height; y++) {
-  //   for (let x = 0; x < Video.width; x++) {
-  //     let index = (Video.width - x + 1 + y * Video.width) * 4;
-  //     let r = Video.pixels[index + 0];
-  //     let g = Video.pixels[index + 1];
-  //     let b = Video.pixels[index + 2];
-  //     let bright = (r + g + b) / 3;
-  //     bris.push(bright);
-  //   }
-  // }
-  bris.sort((a, b) => a > b);
-  let median = bris[Math.floor(bris.length / 2.5)];
-  for (let y = 0; y < Video.height; y++) {
-    for (let x = 0; x < Video.width; x++) {
-      var index = (Video.width - x + 1 + y * Video.width) * 4;
-      let r = Video.pixels[index + 0];
-      let g = Video.pixels[index + 1];
-      let b = Video.pixels[index + 2];
-      let bright = (r + g + b) / 3;
-      let ee = createVector(x * vScale, y * vScale);
-      ee.r = r;
-      ee.g = g;
-      ee.b = b;
-      bright < 90 ? points.push(ee) : "";
-    }
-  }
+  // mouse as an attractor
   kMoyen[k + 1] = createVector(mouseX, mouseY);
-
   background(0);
   // text
   noStroke();
-  // textAlign(CENTER);
-  // fill(255);
-  // text("K-Moyennes", width / 2, height * 0.8);
+  textAlign(CENTER);
+  fill(255);
+  text("K-Means", width / 2, height * 0.8);
 
   for (let i = 0; i < points.length; i++) {
     for (let t = 0; t < kPoints.length; t++) {
