@@ -28,8 +28,6 @@ function preload() {
 }
 
 function setup() {
-  pixelDensity(1.0);
-
   createCanvas(windowWidth, windowHeight);
   if (height > width) {
     vScale = 9;
@@ -100,7 +98,7 @@ function setup() {
   }
 }
 
-function aver(arr) {
+function kAver(arr) {
   if (arr.length === 0) {
     return createVector(0, 0);
   }
@@ -126,7 +124,7 @@ function draw() {
   textAlign(CENTER);
   fill(255);
   text("K-Means", width / 2, height * 0.8);
-
+  // calculate distance, loop through the ks and color the points
   for (let i = 0; i < points.length; i++) {
     for (let t = 0; t < kPoints.length; t++) {
       dis[t] = p5.Vector.dist(points[i], kMoyen[t]);
@@ -136,8 +134,9 @@ function draw() {
     kPoints[n].push(points[i]);
   }
   for (let i = 0; i < kPoints.length; i++) {
-    kMoyen[i] = aver(kPoints[i]);
+    kMoyen[i] = kAver(kPoints[i]);
   }
+
   // display
   for (let i = 0; i < kPoints.length; i++) {
     fill(colors[i]);
@@ -157,7 +156,7 @@ function draw() {
       (Math.sqrt(kPoints[i].length) / k) * kScale
     );
   }
-
+  // empty ks at each loop
   for (let i = 0; i < kMoyen.length; i++) {
     kPoints[i] = [];
   }
