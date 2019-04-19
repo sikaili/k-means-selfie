@@ -133,7 +133,9 @@ function draw() {
       ee.g = g;
       ee.b = b;
       // face&not window
-      bright < 250 && bright > 90 ? points.push(ee) : "";
+      // bright < 220 && bright > 90 ? points.push(ee) : "";
+      // only black
+      bright < 90 ? points.push(ee) : "";
     }
   }
   kMoyen[k + 1] = createVector(mouseX, mouseY);
