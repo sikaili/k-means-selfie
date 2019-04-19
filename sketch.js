@@ -1,11 +1,16 @@
-document.addEventListener('touchmove', function (n) {
-  n.preventDefault();
-}, {
-  passive: false
-});
+document.addEventListener(
+  "touchmove",
+  function(n) {
+    n.preventDefault();
+  },
+  {
+    passive: false
+  }
+);
 
 let state = -1;
-let doubleClick, ts = [];
+let doubleClick,
+  ts = [];
 let points = [];
 let k = 50;
 let kMoyen = [];
@@ -62,7 +67,10 @@ function setup() {
   // noCursor();
   textSize(30);
   for (let i = 0; i < 10000; i++) {
-    let dump = createVector(random(0.3 * width, 0.7 * width), random(0.3 * height, 0.7 * height));
+    let dump = createVector(
+      random(0.3 * width, 0.7 * width),
+      random(0.3 * height, 0.7 * height)
+    );
     points.push(dump);
   }
 
@@ -71,7 +79,10 @@ function setup() {
   kMoyen = [...points].slice(0, k + 1);
 
   for (let i = 0; i < k + 1; i++) {
-    kMoyen[k] = createVector(random(width / 2, width / 2.1), random(width / 2, width / 2.1));
+    kMoyen[k] = createVector(
+      random(width / 2, width / 2.1),
+      random(width / 2, width / 2.1)
+    );
   }
   for (let i = 0; i < kMoyen.length + 1; i++) {
     kPoints[i] = [];
@@ -83,14 +94,11 @@ function aver(arr) {
   if (arr.length === 0) {
     return createVector(0, 0);
   }
-  let [xs, ys] = [
-    [],
-    []
-  ];
+  let [xs, ys] = [[], []];
   arr.forEach(obj => {
     xs.push(obj.x);
     ys.push(obj.y);
-  })
+  });
   let x = xs.reduce((a, b) => a + b) / xs.length;
   let y = ys.reduce((a, b) => a + b) / ys.length;
   return createVector(x, y);
@@ -103,7 +111,7 @@ function draw() {
   let bris = [];
   for (let y = 0; y < Video.height; y++) {
     for (let x = 0; x < Video.width; x++) {
-      let index = (Video.width - x + 1 + (y * Video.width)) * 4;
+      let index = (Video.width - x + 1 + y * Video.width) * 4;
       let r = Video.pixels[index + 0];
       let g = Video.pixels[index + 1];
       let b = Video.pixels[index + 2];
@@ -115,7 +123,7 @@ function draw() {
   let median = bris[Math.floor(bris.length / 2.5)];
   for (let y = 0; y < Video.height; y++) {
     for (let x = 0; x < Video.width; x++) {
-      var index = (Video.width - x + 1 + (y * Video.width)) * 4;
+      var index = (Video.width - x + 1 + y * Video.width) * 4;
       let r = Video.pixels[index + 0];
       let g = Video.pixels[index + 1];
       let b = Video.pixels[index + 2];
@@ -124,18 +132,14 @@ function draw() {
       ee.r = r;
       ee.g = g;
       ee.b = b;
-      bright < 90 ? points.push(ee) : "";
+      // face&not window
+      bright < 250 && bright > 90 ? points.push(ee) : "";
     }
   }
   kMoyen[k + 1] = createVector(mouseX, mouseY);
 
-
   background(0);
-  // text
   noStroke();
-  // textAlign(CENTER);
-  // fill(255);
-  // text("K-Moyennes", width / 2, height * 0.8);
 
   for (let i = 0; i < points.length; i++) {
     for (let t = 0; t < kPoints.length; t++) {
@@ -152,11 +156,20 @@ function draw() {
   for (let i = 0; i < kPoints.length; i++) {
     fill(colors[i]);
     kPoints[i].forEach(a => {
-      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? 4 : 2, height > width ? 4 + Math.random() * 3 : 2);
-    })
+      ellipse(
+        a.x + Math.random(),
+        a.y - Math.random(),
+        height > width ? 4 : 2,
+        height > width ? 4 + Math.random() * 3 : 2
+      );
+    });
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
     i === kMoyen.length - 1 ? fill(200, 0, 180, 200) : "";
-    ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * kScale);
+    ellipse(
+      kMoyen[i].x,
+      kMoyen[i].y,
+      (Math.sqrt(kPoints[i].length) / k) * kScale
+    );
   }
 
   for (let i = 0; i < kMoyen.length; i++) {
@@ -164,6 +177,6 @@ function draw() {
   }
 }
 
-document.touchmove = function (n) {
+document.touchmove = function(n) {
   n.preventDefault();
-}
+};
