@@ -1,11 +1,16 @@
-document.addEventListener('touchmove', function (n) {
-  n.preventDefault();
-}, {
-  passive: false
-});
+document.addEventListener(
+  "touchmove",
+  function(n) {
+    n.preventDefault();
+  },
+  {
+    passive: false
+  }
+);
 
 let state = -1;
-let doubleClick, ts = [];
+let doubleClick,
+  ts = [];
 let points = [];
 let k = 50;
 let kMoyen = [];
@@ -61,7 +66,10 @@ function setup() {
   // noCursor();
   textSize(20);
   for (let i = 0; i < 10000; i++) {
-    let dump = createVector(random(0.3 * width, 0.7 * width), random(0.3 * height, 0.7 * height));
+    let dump = createVector(
+      random(0.3 * width, 0.7 * width),
+      random(0.3 * height, 0.7 * height)
+    );
     points.push(dump);
   }
 
@@ -82,14 +90,11 @@ function aver(arr) {
   if (arr.length === 0) {
     return createVector(0, 0);
   }
-  let [xs, ys] = [
-    [],
-    []
-  ];
+  let [xs, ys] = [[], []];
   arr.forEach(obj => {
     xs.push(obj.x);
     ys.push(obj.y);
-  })
+  });
   let x = xs.reduce((a, b) => a + b) / xs.length;
   let y = ys.reduce((a, b) => a + b) / ys.length;
   return createVector(x, y);
@@ -117,16 +122,19 @@ function draw() {
   let intP = Math.floor(map(mouseX, 0, width, 2, 20));
   for (let y = 0; y < Video.height; y += intP) {
     for (let x = 0; x < Video.width; x += intP) {
-      var index = (Video.width - x + 1 + (y * Video.width)) * 4;
+      var index = (Video.width - x + 1 + y * Video.width) * 4;
       let r = Video.pixels[index + 0];
       let g = Video.pixels[index + 1];
       let b = Video.pixels[index + 2];
+      let colors = [r, g, b];
+      // index < 100 ? console.log(colors) : "";
       let bright = (r + g + b) / 3;
       let ee = createVector(x * vScale, y * vScale);
       ee.r = r;
       ee.g = g;
       ee.b = b;
-      bright < 90 ? points.push(ee) : "";
+      // bright < 90 ? points.push(ee) : "";
+      bright > 90 && bright < 230 ? points.push(ee) : "";
     }
   }
   // mouse as the k+1 center
@@ -155,14 +163,25 @@ function draw() {
     fill(colors[i]);
     stroke(colors[i]);
     kPoints[i].forEach(a => {
-      ellipse(a.x + Math.random(), a.y - Math.random(), height > width ? intP * 3 + Math.random() * intP * 3.5 : intP + Math.random() * intP);
+      ellipse(
+        a.x + Math.random(),
+        a.y - Math.random(),
+        height > width
+          ? intP * 3 + Math.random() * intP * 3.5
+          : intP + Math.random() * intP
+      );
       // line(a.x + Math.random(), a.y - Math.random(), a.x + 4, a.y - 4);
       // line(a.x + Math.random(), a.y - Math.random(), a.x + 2, a.y + 2);
       // vertex(a.x, a.y);
-    })
+    });
     fill(colors[i][0], colors[i][1], colors[i][2], 100);
     i === kMoyen.length - 1 ? fill(200, 0, 180, 200) : "";
-    ellipse(kMoyen[i].x, kMoyen[i].y, Math.sqrt(kPoints[i].length) / k * kScale * intP / 5);
+    noStroke();
+    ellipse(
+      kMoyen[i].x,
+      kMoyen[i].y,
+      (Math.sqrt(kPoints[i].length) / k) * kScale * intP
+    );
   }
   // reset pixels in each center every time
   for (let i = 0; i < kMoyen.length; i++) {
@@ -170,6 +189,6 @@ function draw() {
   }
 }
 
-document.touchmove = function (n) {
+document.touchmove = function(n) {
   n.preventDefault();
-}
+};
